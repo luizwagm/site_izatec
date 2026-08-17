@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <!-- A flor do logotipo, reduzida ao essencial: sete pétalas translúcidas e o
+       anel vermelho no centro. No favicon (16px) as pétalas viram uma mancha
+       colorida e o anel continua legível — que é exatamente o que faz a marca
+       ser reconhecida na aba, mesmo minúscula. -->
+  <rect width="96" height="96" rx="14" fill="#142038"/>
+  <g transform="translate(2 2) scale(.96)">
+    <circle cx="34" cy="26" r="15" fill="#3FA9C9" opacity=".85"/>
+    <circle cx="58" cy="20" r="15" fill="#E8730C" opacity=".85"/>
+    <circle cx="74" cy="38" r="15" fill="#F5B400" opacity=".85"/>
+    <circle cx="70" cy="60" r="15" fill="#8CC63E" opacity=".85"/>
+    <circle cx="52" cy="70" r="15" fill="#5AAE3A" opacity=".85"/>
+    <circle cx="32" cy="64" r="15" fill="#9B2C8F" opacity=".85"/>
+    <circle cx="22" cy="44" r="15" fill="#C8963E" opacity=".85"/>
+    <circle cx="46" cy="44" r="17" fill="none" stroke="#E30613" stroke-width="8"/>
+  </g>
+</svg>

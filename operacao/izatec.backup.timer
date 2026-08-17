@@ -1,0 +1,15 @@
+[Unit]
+Description=Backup diário do banco da Izatec
+
+[Timer]
+# 03:40 — antes das 04:00 do LA-Backup, para que a cópia do dia já esteja
+# gravada quando o restic subir a pasta `backups/` para o R2. Invertida, a
+# ordem faria o R2 guardar sempre a cópia de ONTEM.
+OnCalendar=*-*-* 03:40:00
+# Se a máquina estava desligada na hora marcada, roda ao ligar. Sem isto, um
+# reboot às 03:30 pula o backup do dia inteiro sem avisar ninguém.
+Persistent=true
+RandomizedDelaySec=120
+
+[Install]
+WantedBy=timers.target

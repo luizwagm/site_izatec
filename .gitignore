@@ -1,0 +1,37 @@
+# ==========================================================================
+# O QUE NUNCA ENTRA NO REPOSITÓRIO
+#
+# ATENÇÃO À BARRA INICIAL. Um padrão como `dados/` casa em QUALQUER
+# profundidade — inclusive em `src/infra/dados/`, engolindo código-fonte sem
+# avisar. Já aconteceu em outro projeto do parque e custou caro para descobrir.
+# Por isso tudo aqui é ancorado na raiz, com `/`.
+# ==========================================================================
+
+# O banco é do cliente. Nunca versionado: dentro dele há pedido, telefone e
+# CNPJ de quem comprou.
+/data/*
+!/data/.gitkeep
+
+# Cópias de segurança — mesmo motivo, e pesam.
+/backups/*
+!/backups/.gitkeep
+
+# Segredos. Perder o IZATEC_SEGREDO invalida os carrinhos abertos; publicá-lo
+# deixa qualquer pessoa forjar um pedido assinado.
+#
+# O `.env.exemplo` PRECISA ser versionado: é ele que documenta quais variáveis
+# existem. Sem a exceção abaixo, `/.env.*` o engoliria junto — e quem clonasse
+# o repositório não teria como saber que IZATEC_SITE existe.
+/.env
+/.env.*
+!/.env.exemplo
+
+node_modules/
+npm-debug.log*
+
+# Sistema operacional e editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

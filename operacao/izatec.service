@@ -1,0 +1,59 @@
+[Unit]
+Description=Izatec Tecidos — site e painéis
+Documentation=file:///var/www/projetos/Izatec-Tecidos/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=deploy
+Group=deploy
+WorkingDirectory=/var/www/projetos/Izatec-Tecidos
+Environment=NODE_ENV=production
+Environment=PORT=5198
+Environment=HOST=127.0.0.1
+# O segredo do carrinho vive fora do repositório. Sem este arquivo o serviço
+# ainda sobe — a chave passa a vir do banco —, mas com ele a chave fica sob
+# controle de quem opera, e sobrevive à troca do arquivo do banco.
+EnvironmentFile=-/var/www/projetos/Izatec-Tecidos/.env
+ExecStart=/usr/bin/node server.js
+
+Restart=always
+RestartSec=3
+# Não desiste depois de N tentativas: o Postgres do servidor cai por ~5s no
+# upgrade automático de madrugada, e um serviço que "desistiu" às 4h só é
+# notado às 8h, com o site fora do ar a manhã inteira. (Aqui o banco é SQLite,
+# mas a mesma lógica vale para disco lento e rede.)
+StartLimitIntervalSec=0
+
+# ==========================================================================
+# CONTENÇÃO
+#
+# O processo escreve em DOIS lugares e mais nada: o banco e as cópias.
+# ProtectSystem=strict deixa o resto do disco somente-leitura, então uma falha
+# no código não consegue reescrever o próprio server.js.
+#
+# NÃO existe MemoryDenyWriteExecute aqui, e é DE PROPÓSITO: essa trava mata o
+# compilador do V8 com "5/TRAP" alguns segundos depois de subir. O sintoma
+# parece queda de rede e já custou uma tarde de investigação em outro projeto.
+# ==========================================================================
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/projetos/Izatec-Tecidos/data
+ReadWritePaths=/var/www/projetos/Izatec-Tecidos/backups
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+LockPersonality=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=izatec
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,1111 @@
+/* ==========================================================================
+   IZATEC — componentes do site
+
+   O design system diz COMO a marca se comporta (cor, ritmo, forma).
+   Este arquivo desenha as peças concretas. A separação importa: quando a
+   paleta mudar, muda lá; quando o cabeçalho mudar, muda aqui.
+   ========================================================================== */
+
+/* Pular para o conteúdo: primeiro elemento focável da página. Quem navega por
+   teclado não precisa passar pelos treze links do menu em toda página. */
+.pular {
+  position: absolute; left: var(--e4); top: -4rem; z-index: 100;
+  background: var(--acao); color: #fff; padding: var(--e3) var(--e4);
+  border-radius: var(--raio); font-weight: var(--peso-forte);
+  transition: top var(--transicao);
+}
+.pular:focus { top: var(--e4); }
+
+/* ==========================================================================
+   MARCA (SVG)
+   A tipografia do logo é reconstruída com as mesmas proporções do arquivo:
+   "IZA" no cinza claro, "TEC" no escuro, e o descritivo espaçado embaixo.
+   ========================================================================== */
+.marca { display: block; height: auto; }
+.marca__iza, .marca__tec {
+  font-family: var(--fonte); font-weight: 800; font-size: 40px; letter-spacing: -.02em;
+}
+.marca__iza { fill: var(--tinta-media); }
+.marca__tec { fill: var(--tinta); }
+.marca__sub {
+  font-family: var(--fonte); font-weight: 600; font-size: 12.5px;
+  letter-spacing: .62em; fill: var(--tinta-media);
+}
+/* No fundo escuro a tipografia clareia; a flor não muda, porque as pétalas
+   já têm cor própria e funcionam nos dois fundos. */
+.secao--escura .marca__iza, .rodape .marca__iza { fill: #97A3BB; }
+.secao--escura .marca__tec, .rodape .marca__tec { fill: #fff; }
+.secao--escura .marca__sub, .rodape .marca__sub { fill: #7E8CA8; }
+
+/* ==========================================================================
+   TOPO
+   Preso no lugar: em catálogo longo, a pessoa precisa alcançar a busca e o
+   botão de amostra sem rolar de volta ao início.
+   ========================================================================== */
+.topo {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: var(--borda);
+}
+.topo__in { display: flex; align-items: center; gap: var(--e5); min-height: 4.5rem; }
+.topo__marca { flex: none; display: block; }
+
+.nav { display: flex; gap: var(--e5); margin-left: auto; }
+.nav__i {
+  position: relative; padding: var(--e2) 0;
+  font-weight: var(--peso-medio); font-size: var(--t-mini);
+  text-transform: uppercase; letter-spacing: .08em; text-decoration: none;
+  color: var(--tinta);
+}
+/* O sublinhado cresce do centro: o movimento é curto e não empurra layout. */
+.nav__i::after {
+  content: ""; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+  background: var(--acao); transition: width var(--transicao), left var(--transicao);
+}
+.nav__i:hover::after, .nav__i--atual::after { width: 100%; left: 0; }
+.nav__i--atual { color: var(--acao); }
+
+.topo__acoes { display: flex; align-items: center; gap: var(--e3); }
+.btn--sm { min-height: 2.5rem; padding: var(--e2) var(--e4); font-size: var(--t-micro); }
+
+.topo__menu {
+  display: none; flex-direction: column; gap: 4px; justify-content: center;
+  width: 2.75rem; height: 2.75rem; padding: 0 .6rem;
+  background: none; border: var(--borda); border-radius: var(--raio); cursor: pointer;
+}
+.topo__menu span { display: block; height: 2px; background: var(--tinta); transition: var(--transicao); }
+.topo__menu[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.topo__menu[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.topo__menu[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav-movel { display: none; flex-direction: column; gap: var(--e2);
+  padding: var(--e4) var(--e5) var(--e6); border-top: var(--borda); background: var(--papel); }
+.nav-movel a { padding: var(--e3) 0; font-weight: var(--peso-medio); text-decoration: none;
+  border-bottom: var(--borda); }
+.nav-movel .btn { margin-top: var(--e3); border-bottom: 0; }
+
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .topo__menu { display: flex; }
+  .nav-movel:not([hidden]) { display: flex; }
+  .topo__acoes .btn { display: none; }
+}
+
+/* ==========================================================================
+   CAPA
+   Duas colunas no desktop (texto + prova), empilhadas no celular. Sem imagem:
+   o peso vem do tipo grande e da trama diagonal — que é a sarja do jeans.
+   ========================================================================== */
+.capa {
+  background: var(--indigo-fundo); color: #fff;
+  padding-block: clamp(var(--e7), 8vw, var(--e10));
+}
+.capa__in { display: grid; gap: var(--e7); align-items: end;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); }
+@media (max-width: 900px) { .capa__in { grid-template-columns: 1fr; } }
+
+.capa__tarja {
+  display: inline-block; margin-bottom: var(--e5);
+  padding: var(--e1) var(--e3);
+  border: 1px solid rgba(255,255,255,.28); border-radius: var(--raio-pilula);
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .12em; text-transform: uppercase; color: #C9D3E6;
+}
+.capa h1 { color: #fff; max-width: 18ch; }
+.capa__chamada {
+  margin-top: var(--e5); max-width: 54ch;
+  font-size: var(--t-medio); color: #C3CBDA; line-height: 1.65;
+}
+.capa__acoes { display: flex; flex-wrap: wrap; gap: var(--e3); margin-top: var(--e6); }
+
+/* A prova em <dl>: número e legenda são par de dado, não decoração. */
+.prova { display: grid; gap: var(--e5); margin: 0; }
+.prova div { padding-left: var(--e4); border-left: 3px solid var(--acao); }
+.prova dt {
+  font-family: var(--fonte-num); font-size: var(--t-gg);
+  font-weight: var(--peso-forte); line-height: 1; color: #fff;
+}
+.prova dd { margin: var(--e2) 0 0; font-size: var(--t-mini); color: #A8B4CA; max-width: 24ch; }
+
+/* ==========================================================================
+   FAMÍLIAS
+   A cor entra como TIRA no topo do cartão. Fundo colorido em oito variações
+   viraria parque de diversões e tiraria a atenção do produto.
+   ========================================================================== */
+.fcard {
+  position: relative; display: flex; flex-direction: column;
+  padding: var(--e6) var(--e5) var(--e5);
+  background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  text-decoration: none; overflow: hidden;
+  transition: border-color var(--transicao), transform var(--transicao), box-shadow var(--transicao);
+}
+.fcard__tira { position: absolute; inset: 0 0 auto; height: 5px; background: var(--cor-f, var(--tinta-media)); }
+.fcard:hover { transform: translateY(-3px); border-color: var(--cor-f); box-shadow: var(--sombra-g); }
+.fcard h3 { font-size: var(--t-medio); margin-bottom: var(--e2); }
+.fcard p { font-size: var(--t-mini); color: var(--tinta-media); flex: 1; margin-bottom: var(--e4); }
+.fcard__n {
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--cor-f);
+}
+.fcard--jeans       { --cor-f: var(--fam-jeans); }
+.fcard--sarja       { --cor-f: var(--fam-sarja); }
+.fcard--malha       { --cor-f: var(--fam-malha); }
+.fcard--moletom     { --cor-f: var(--fam-moletom); }
+.fcard--tricoline   { --cor-f: var(--fam-tricoline); }
+.fcard--viscose     { --cor-f: var(--fam-viscose); }
+.fcard--alfaiataria { --cor-f: var(--fam-alfaiataria); }
+.fcard--aviamentos  { --cor-f: var(--fam-aviamentos); }
+
+/* ==========================================================================
+   ARTIGO (cartão de tecido)
+   ========================================================================== */
+.art {
+  display: flex; flex-direction: column;
+  background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  overflow: hidden; transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+.art:hover { border-color: var(--tinta-fraca); box-shadow: var(--sombra-g); }
+.art__link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; }
+
+/* Enquanto não há foto do tecido, o bloco recebe a COR REAL da primeira cor
+   cadastrada, com a trama por cima. É honesto — mostra a cor, não finge ser
+   uma foto — e some no dia em que a loja subir as fotos. */
+.art__foto {
+  aspect-ratio: 4 / 3; background: var(--tom, var(--tinta-fraca));
+  background-image: repeating-linear-gradient(63deg,
+    rgba(255,255,255,.10) 0 1px, transparent 1px 6px);
+}
+.art__corpo { padding: var(--e4); display: flex; flex-direction: column; gap: var(--e2); flex: 1; }
+.art__nome { font-size: var(--t-medio); }
+.art__chamada { font-size: var(--t-mini); color: var(--tinta-media); margin: 0; flex: 1; }
+
+.art__tec { display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--e2); margin: var(--e2) 0 0; padding-top: var(--e3); border-top: var(--borda); }
+.art__tec dt { font-size: var(--t-micro); color: var(--tinta-media);
+  text-transform: uppercase; letter-spacing: .06em; }
+.art__tec dd { margin: 2px 0 0; font-family: var(--fonte-num);
+  font-size: var(--t-mini); font-weight: var(--peso-forte); font-variant-numeric: tabular-nums; }
+
+.art__pe { display: flex; align-items: center; justify-content: space-between;
+  gap: var(--e3); padding: var(--e3) var(--e4); border-top: var(--borda); background: var(--papel-2); }
+.art__cores { display: flex; align-items: center; gap: 3px; }
+.art__cores i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.12); }
+.art__cores b { font-size: var(--t-micro); color: var(--tinta-media); margin-left: 2px; }
+
+.sinal { font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .06em; text-transform: uppercase; display: inline-flex;
+  align-items: center; gap: var(--e1); }
+.sinal::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.sinal--ok       { color: var(--sinal-ok); }
+.sinal--atencao  { color: #A87F00; }        /* o ouro puro não passa contraste em texto pequeno */
+.sinal--fim      { color: var(--tinta-media); }
+
+/* ==========================================================================
+   PROMESSAS
+   ========================================================================== */
+.promessa { padding-top: var(--e4); border-top: 2px solid rgba(255,255,255,.18); }
+.promessa__n {
+  display: block; font-family: var(--fonte-num); font-size: var(--t-medio);
+  font-weight: var(--peso-forte); color: var(--petala-ouro); margin-bottom: var(--e3);
+}
+.promessa h3 { font-size: var(--t-medio); color: #fff; margin-bottom: var(--e3); }
+.promessa p { font-size: var(--t-mini); color: #B7C0D2; line-height: 1.7; margin: 0; }
+
+/* ==========================================================================
+   LOJAS
+   ========================================================================== */
+.loja { padding: var(--e5); border: var(--borda); border-radius: var(--raio-g); background: var(--papel); }
+.loja h3 { font-size: var(--t-g); margin-bottom: var(--e3); }
+.loja address { font-style: normal; color: var(--tinta-media); margin-bottom: var(--e2); }
+.loja__hora { font-size: var(--t-mini); color: var(--tinta-media); margin-bottom: var(--e4); }
+
+/* ==========================================================================
+   FEED (cartão de matéria)
+   ========================================================================== */
+.post {
+  display: flex; flex-direction: column; padding: var(--e5);
+  background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  text-decoration: none; color: inherit;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+.post:hover { border-color: var(--acao); box-shadow: var(--sombra-g); }
+.post__et { font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .1em; text-transform: uppercase; color: var(--acao); margin-bottom: var(--e3); }
+.post h3 { font-size: var(--t-medio); margin-bottom: var(--e3); }
+.post p { font-size: var(--t-mini); color: var(--tinta-media); flex: 1; }
+.post__mais { font-size: var(--t-mini); font-weight: var(--peso-forte); color: var(--acao); }
+
+/* ==========================================================================
+   RODAPÉ
+   ========================================================================== */
+.rodape { background: var(--indigo-fundo); color: #C3CBDA; padding-top: var(--e8); }
+.rodape__topo { display: grid; gap: var(--e6);
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  padding-bottom: var(--e7); }
+@media (max-width: 900px) { .rodape__topo { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); } }
+
+.rodape__frase { margin: var(--e4) 0; max-width: 32ch; color: #97A3BB; font-size: var(--t-mini); }
+.rodape__zap { color: #fff; font-weight: var(--peso-medio); font-size: var(--t-mini); }
+.rodape__tit { font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: var(--e4); }
+.rodape__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--e2); }
+.rodape__col a { color: #A8B4CA; text-decoration: none; font-size: var(--t-mini); }
+.rodape__col a:hover { color: #fff; text-decoration: underline; }
+.rodape__loja { font-style: normal; font-size: var(--t-mini); margin-bottom: var(--e4); color: #A8B4CA; }
+.rodape__loja strong { display: block; color: #fff; margin-bottom: 2px; }
+.rodape__loja span { color: #7E8CA8; }
+
+.rodape__base { display: flex; flex-wrap: wrap; gap: var(--e4);
+  align-items: center; justify-content: space-between;
+  padding-block: var(--e5); border-top: 1px solid rgba(255,255,255,.12); }
+.rodape__legal { margin: 0; font-size: var(--t-micro); color: #7E8CA8; }
+
+/* A assinatura acende no vermelho da Izatec: ela pertence a ESTE site, e não
+   é um selo colado por cima. */
+.dev-credit {
+  display: inline-flex; align-items: center; gap: var(--e2);
+  font-size: var(--t-micro); color: #7E8CA8; text-decoration: none;
+  transition: color var(--transicao);
+}
+.dev-credit strong { color: #A8B4CA; font-weight: var(--peso-forte); transition: color var(--transicao); }
+.dev-credit:hover, .dev-credit:hover strong { color: var(--acao); }
+
+/* ==========================================================================
+   MIGALHA (breadcrumb)
+
+   Existe por dois motivos, e nenhum deles é enfeite: quem chega pela busca do
+   Google cai direto na página do artigo e precisa saber onde está; e o Google
+   usa a trilha para montar o caminho que aparece no resultado da busca.
+   ========================================================================== */
+.migalha {
+  display: flex; align-items: center; gap: var(--e2); flex-wrap: wrap;
+  padding-top: var(--e5); font-size: var(--t-micro);
+  color: var(--tinta-media);
+}
+.migalha a { text-decoration: none; }
+.migalha a:hover { color: var(--acao); text-decoration: underline; }
+.migalha b { color: var(--tinta); font-weight: var(--peso-medio); }
+.migalha span { color: var(--tinta-fraca); }
+
+.secao--curta { padding-block: var(--e6) var(--e7); }
+.secao--topo0 { padding-top: 0; }
+
+/* ==========================================================================
+   FILTROS DO CATÁLOGO
+
+   São LINKS, não controles de formulário. Cada recorte ganha URL própria —
+   dá para mandar no WhatsApp e o Google indexa "jeans acima de 300 g/m²"
+   como página. Um <select> com JavaScript não faria nenhuma das duas coisas.
+   ========================================================================== */
+.filtros {
+  display: flex; align-items: center; gap: var(--e2); flex-wrap: wrap;
+  padding: var(--e4) 0; margin-bottom: var(--e4);
+  border-block: var(--borda);
+}
+.filtros__rot {
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .1em; color: var(--tinta-media);
+  margin-left: var(--e4);
+}
+.filtros__rot:first-child { margin-left: 0; }
+
+.chip {
+  display: inline-flex; align-items: center; min-height: 2.25rem;
+  padding: var(--e1) var(--e3);
+  border: var(--borda); border-radius: var(--raio-pilula);
+  background: var(--papel); color: var(--tinta); text-decoration: none;
+  font-size: var(--t-micro); font-weight: var(--peso-medio);
+  transition: all var(--transicao);
+}
+.chip:hover { border-color: var(--tinta); }
+.chip--on { background: var(--indigo-fundo); color: #fff; border-color: var(--indigo-fundo); }
+
+/* Fita de famílias: rola de lado no celular em vez de quebrar em quatro
+   linhas e empurrar o catálogo para baixo da dobra. */
+.fam-linha {
+  display: flex; gap: var(--e2); overflow-x: auto; padding-bottom: var(--e2);
+  scrollbar-width: thin;
+}
+.fam-linha__i {
+  display: inline-flex; align-items: center; gap: var(--e2);
+  padding: var(--e2) var(--e4); white-space: nowrap;
+  border: var(--borda); border-radius: var(--raio);
+  text-decoration: none; font-size: var(--t-mini); font-weight: var(--peso-medio);
+  background: var(--papel); transition: all var(--transicao);
+}
+.fam-linha__i::before {
+  content: ""; width: .5rem; height: .5rem; border-radius: 50%;
+  background: var(--cor-f, var(--tinta-fraca)); flex: none;
+}
+.fam-linha__i:hover { border-color: var(--tinta-fraca); }
+.fam-linha__i--on { background: var(--indigo-fundo); color: #fff; border-color: var(--indigo-fundo); }
+
+.lista__conta {
+  font-size: var(--t-micro); color: var(--tinta-media);
+  text-transform: uppercase; letter-spacing: .08em; font-weight: var(--peso-medio);
+  margin-bottom: var(--e4);
+}
+
+/* ==========================================================================
+   VAZIO — quando o filtro não encontra nada
+
+   Nunca uma tela em branco com "0 resultados". Em atacado, boa parte do
+   estoque gira toda semana e nem tudo está no site: o caminho certo aqui é
+   levar a pessoa ao WhatsApp, não devolvê-la ao Google.
+   ========================================================================== */
+.vazio {
+  text-align: center; padding: var(--e8) var(--e4);
+  border: 2px dashed var(--linha); border-radius: var(--raio-g);
+  background: var(--papel-2);
+}
+.vazio h1, .vazio h3 { margin-bottom: var(--e3); }
+.vazio p { color: var(--tinta-media); max-width: 46ch; margin-inline: auto; }
+.vazio .btn { margin-top: var(--e4); }
+.vazio--404 { border: none; background: none; }
+.vazio__num {
+  display: block; font-family: var(--fonte-num); font-size: var(--t-ggg);
+  font-weight: var(--peso-forte); color: var(--linha); line-height: 1;
+  letter-spacing: -.04em; margin-bottom: var(--e3);
+}
+
+/* ==========================================================================
+   PÁGINA DO ARTIGO
+
+   Duas colunas no desktop: a cor à esquerda, tudo que decide a compra à
+   direita. No celular vira uma coluna e a ordem do HTML já é a certa —
+   cor, nome, estoque, ficha, preço, ação.
+   ========================================================================== */
+.produto {
+  display: grid; gap: var(--e6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+}
+.produto__visual { position: sticky; top: 6rem; }
+.produto__foto {
+  aspect-ratio: 1; border-radius: var(--raio-g);
+  background: var(--tom, var(--tinta-fraca));
+  background-image: repeating-linear-gradient(63deg,
+    rgba(255,255,255,.10) 0 1px, transparent 1px 6px);
+  transition: background-color var(--transicao);
+}
+.produto__cores { display: flex; gap: var(--e2); flex-wrap: wrap; margin-top: var(--e4); }
+.cor {
+  width: 2.5rem; height: 2.5rem; border-radius: 50%; cursor: pointer;
+  background: var(--c); border: 2px solid var(--linha); padding: 0;
+  transition: all var(--transicao);
+}
+.cor:hover { transform: scale(1.08); }
+.cor--on { border-color: var(--acao); box-shadow: 0 0 0 3px var(--acao-suave); }
+.produto__cor-nome {
+  margin-top: var(--e3); font-weight: var(--peso-medio); font-size: var(--t-mini);
+}
+.produto__cor-nome span { color: var(--tinta-media); font-family: var(--fonte-num); }
+
+.produto__dados > * { margin-bottom: var(--e4); }
+.produto__dados h1 { margin-block: var(--e3); }
+.produto__chamada { font-size: var(--t-medio); color: var(--tinta-media); }
+.produto__sub {
+  font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .12em;
+  color: var(--tinta-media); font-weight: var(--peso-forte);
+  padding-top: var(--e4); border-top: var(--borda); margin-bottom: var(--e3);
+}
+.produto__desc { color: var(--tinta-media); }
+
+/* ==========================================================================
+   FAIXAS DE PREÇO
+
+   Tabela mesmo, com números alinhados à direita e em fonte tabular. É o
+   componente que responde "compensa levar o rolo fechado?" — e essa pergunta
+   se responde comparando colunas, não lendo frases.
+   ========================================================================== */
+.faixas { width: 100%; border-collapse: collapse; font-size: var(--t-mini); }
+.faixas th {
+  text-align: left; font-size: var(--t-micro); text-transform: uppercase;
+  letter-spacing: .08em; color: var(--tinta-media); font-weight: var(--peso-forte);
+  padding: var(--e2) var(--e3); border-bottom: 2px solid var(--linha);
+}
+.faixas th:last-child, .faixas td:last-child { text-align: right; }
+.faixas td {
+  padding: var(--e3); border-bottom: var(--borda);
+  font-family: var(--fonte-num); font-variant-numeric: tabular-nums;
+  font-weight: var(--peso-medio);
+}
+.faixas td span { font-family: var(--fonte); font-weight: 400; color: var(--tinta-media);
+  font-size: var(--t-micro); }
+.faixas tr:last-child td { background: var(--acao-suave); }
+
+.produto__acoes { display: flex; gap: var(--e3); flex-wrap: wrap; align-items: flex-end; }
+.compra { display: flex; gap: var(--e3); align-items: flex-end; flex-wrap: wrap; }
+.compra__qtd { display: flex; flex-direction: column; gap: var(--e1); }
+.compra__qtd span {
+  font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .08em;
+  color: var(--tinta-media); font-weight: var(--peso-forte);
+}
+.compra__qtd input {
+  width: 7rem; min-height: 3rem; padding: var(--e2) var(--e3);
+  border: var(--borda); border-radius: var(--raio);
+  font: inherit; font-family: var(--fonte-num); font-size: var(--t-medio);
+  font-weight: var(--peso-forte); text-align: center;
+}
+
+/* ==========================================================================
+   AMOSTRA — o bloco que fecha venda em atacado têxtil
+   ========================================================================== */
+.amostra {
+  display: grid; gap: var(--e6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: start;
+}
+.amostra__texto h2 { margin-block: var(--e3); }
+.amostra__texto p { color: #C3CBDA; }
+.amostra__nota {
+  display: inline-block; padding: var(--e2) var(--e3);
+  border: 1px solid rgba(255,255,255,.25); border-radius: var(--raio);
+  font-size: var(--t-mini); font-weight: var(--peso-medio); color: #fff !important;
+}
+.amostra__form {
+  background: var(--papel); border-radius: var(--raio-g); padding: var(--e5);
+  color: var(--tinta);
+}
+.amostra__lgpd { font-size: var(--t-micro); color: var(--tinta-media);
+  margin: var(--e3) 0 0; }
+
+/* Campos do site: mais altos que os do painel — o site é usado em pé, com o
+   polegar, e alvo de 3rem é o mínimo confortável nessa situação. */
+.campo { display: flex; flex-direction: column; gap: var(--e1); margin-bottom: var(--e4); }
+.campo label {
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .06em; color: var(--tinta-media);
+}
+.campo label span { text-transform: none; letter-spacing: 0; font-weight: 400; }
+.campo input, .campo select, .campo textarea {
+  font: inherit; font-size: var(--t-mini); color: var(--tinta);
+  background: var(--papel); border: var(--borda); border-radius: var(--raio);
+  padding: var(--e3); min-height: 3rem; width: 100%;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+.campo textarea { min-height: auto; resize: vertical; line-height: 1.55; }
+.campo input:focus, .campo select:focus, .campo textarea:focus {
+  border-color: var(--acao); box-shadow: 0 0 0 3px var(--acao-suave); outline: none;
+}
+.campo--radio { border: var(--borda); border-radius: var(--raio); padding: var(--e3); }
+.campo--radio legend { font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .06em; color: var(--tinta-media); padding: 0 var(--e2); }
+.campo--radio label { display: flex; gap: var(--e2); align-items: center;
+  text-transform: none; letter-spacing: 0; color: var(--tinta);
+  font-weight: 400; font-size: var(--t-mini); padding: var(--e2) 0; }
+.campo--radio input { width: auto; min-height: auto; }
+
+.aviso { padding: var(--e3) var(--e4); border-radius: var(--raio);
+  margin-bottom: var(--e4); font-weight: var(--peso-medio); font-size: var(--t-mini); }
+.aviso--ok   { background: #EEF7E8; color: #2F6B18; border-left: 3px solid var(--sinal-ok); }
+.aviso--erro { background: var(--acao-suave); color: var(--acao-forte);
+  border-left: 3px solid var(--acao); }
+
+/* ==========================================================================
+   CARRINHO E FECHAMENTO
+   ========================================================================== */
+.tabela-pedido { width: 100%; border-collapse: collapse; font-size: var(--t-mini); }
+.tabela-pedido th {
+  text-align: left; font-size: var(--t-micro); text-transform: uppercase;
+  letter-spacing: .08em; color: var(--tinta-media); font-weight: var(--peso-forte);
+  padding: var(--e2) var(--e3); border-bottom: 2px solid var(--linha);
+}
+.tabela-pedido td { padding: var(--e3); border-bottom: var(--borda); vertical-align: middle; }
+.tabela-pedido tfoot td {
+  border-bottom: none; padding-top: var(--e4);
+  font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .08em;
+  color: var(--tinta-media); font-weight: var(--peso-forte);
+}
+.tp__total { font-family: var(--fonte-num); font-size: var(--t-g);
+  color: var(--tinta); letter-spacing: -.02em; }
+.tp__cor { display: inline-block; width: 1rem; height: 1rem; border-radius: 50%;
+  border: 1px solid rgba(0,0,0,.15); vertical-align: -2px; margin-right: var(--e2); }
+.tp__sub { display: block; color: var(--tinta-media); font-size: var(--t-micro);
+  margin-left: 1.5rem; }
+/* O aviso de estoque é AMARELO, não vermelho: pedir mais do que há é normal
+   em atacado e vira encomenda. Vermelho diria "erro" e faria o comprador
+   reduzir a quantidade sem precisar. */
+.tp__alerta { display: block; margin-left: 1.5rem; margin-top: var(--e1);
+  font-size: var(--t-micro); color: #7A5B00; background: #FFF3CD;
+  padding: var(--e1) var(--e2); border-radius: var(--raio); }
+.tabela-pedido input[type="number"] {
+  width: 5rem; padding: var(--e2); border: var(--borda); border-radius: var(--raio);
+  font: inherit; font-family: var(--fonte-num); text-align: center;
+}
+.tp__un { font-size: var(--t-micro); color: var(--tinta-media); margin-left: var(--e1); }
+.tp__x { background: none; border: none; font-size: var(--t-medio); line-height: 1;
+  color: var(--tinta-fraca); cursor: pointer; padding: var(--e1) var(--e2); }
+.tp__x:hover { color: var(--acao); }
+
+.carrinho__acoes { display: flex; gap: var(--e3); flex-wrap: wrap;
+  margin-top: var(--e5); justify-content: flex-end; }
+.carrinho__nota { font-size: var(--t-micro); color: var(--tinta-media);
+  margin-top: var(--e4); text-align: right; }
+
+.fechar { display: grid; gap: var(--e6);
+  grid-template-columns: minmax(0, 1.4fr) minmax(min(100%, 18rem), 1fr);
+  align-items: start; }
+@media (max-width: 800px) { .fechar { grid-template-columns: 1fr; } }
+.fechar__resumo {
+  background: var(--papel-2); border: var(--borda); border-radius: var(--raio-g);
+  padding: var(--e5); position: sticky; top: 6rem;
+}
+.fechar__resumo h2 { font-size: var(--t-medio); margin-bottom: var(--e4); }
+.fechar__resumo ul { list-style: none; margin: 0 0 var(--e4); padding: 0; }
+.fechar__resumo li { display: grid; grid-template-columns: 1fr auto;
+  gap: var(--e1) var(--e3); padding: var(--e3) 0; border-bottom: var(--borda);
+  font-size: var(--t-mini); }
+.fechar__resumo li b { grid-column: 1; color: var(--tinta-media); font-weight: 400;
+  font-family: var(--fonte-num); font-size: var(--t-micro); }
+.fechar__resumo li em { grid-row: 1 / 3; grid-column: 2; align-self: center;
+  font-style: normal; font-family: var(--fonte-num); font-weight: var(--peso-forte); }
+.fechar__total { display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: var(--e3); border-top: 2px solid var(--linha); }
+.fechar__total strong { font-family: var(--fonte-num); font-size: var(--t-g);
+  letter-spacing: -.02em; }
+.fechar__nota { font-size: var(--t-micro); color: var(--tinta-media); }
+
+.obrigado { text-align: center; max-width: 44rem; }
+.obrigado__selo {
+  display: grid; place-items: center; width: 4rem; height: 4rem;
+  margin: 0 auto var(--e5); border-radius: 50%;
+  background: var(--sinal-ok); color: #fff; font-size: var(--t-g);
+  font-weight: var(--peso-forte);
+}
+.obrigado h1 { margin-bottom: var(--e4); }
+.obrigado p { color: var(--tinta-media); max-width: 52ch; margin-inline: auto; }
+.obrigado__cod { font-size: var(--t-medio); color: var(--tinta) !important; }
+.obrigado__cod strong { font-family: var(--fonte-num); }
+.obrigado__total strong { font-family: var(--fonte-num); color: var(--tinta); }
+.obrigado__total span { font-size: var(--t-micro); }
+.obrigado__eco em { color: var(--tinta); font-style: normal; font-weight: var(--peso-medio); }
+.obrigado__acoes { display: flex; gap: var(--e3); justify-content: center;
+  flex-wrap: wrap; margin-top: var(--e5); }
+
+/* ==========================================================================
+   FEED
+   ========================================================================== */
+.post__link { display: flex; flex-direction: column; height: 100%;
+  text-decoration: none; color: inherit; }
+.post__capa { aspect-ratio: 16 / 9; background: var(--indigo-fundo); }
+.post__corpo { padding: var(--e4); display: flex; flex-direction: column;
+  gap: var(--e2); flex: 1; }
+.post__tag {
+  display: inline-block; align-self: flex-start;
+  padding: var(--e1) var(--e3); border-radius: var(--raio-pilula);
+  background: var(--acao-suave); color: var(--acao-forte);
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.post__tit { font-size: var(--t-medio); }
+.post__res { font-size: var(--t-mini); color: var(--tinta-media); margin: 0; flex: 1; }
+.post__data { font-size: var(--t-micro); color: var(--tinta-fraca);
+  font-family: var(--fonte-num); }
+
+.materia { max-width: var(--largura-texto); margin-inline: auto; }
+.materia__cab { margin-bottom: var(--e6); }
+.materia__cab h1 { margin-block: var(--e3); }
+.materia__res { font-size: var(--t-medio); color: var(--tinta-media); }
+.materia__corpo h2 { font-size: var(--t-g); margin: var(--e6) 0 var(--e3); }
+.materia__corpo p { font-size: var(--t-medio); line-height: 1.7; }
+.materia__corpo ul { padding-left: var(--e5); }
+.materia__corpo li { margin-bottom: var(--e2); font-size: var(--t-medio); line-height: 1.7; }
+
+.materia__cta {
+  margin-top: var(--e7); padding: var(--e5);
+  background: var(--papel-2); border-left: 3px solid var(--acao);
+  border-radius: 0 var(--raio-g) var(--raio-g) 0;
+}
+.materia__cta h2 { font-size: var(--t-medio); margin-bottom: var(--e2); }
+.materia__cta p { color: var(--tinta-media); }
+.materia__cta-acoes { display: flex; gap: var(--e3); flex-wrap: wrap; }
+
+.materia__mais { margin-top: var(--e7); padding-top: var(--e5); border-top: var(--borda); }
+.materia__mais h2 { font-size: var(--t-medio); margin-bottom: var(--e4); }
+.materia__mais ul { list-style: none; margin: 0; padding: 0; }
+.materia__mais a { display: flex; flex-direction: column; gap: var(--e1);
+  padding: var(--e3) 0; border-bottom: var(--borda); text-decoration: none; }
+.materia__mais a:hover strong { color: var(--acao); }
+.materia__mais span { color: var(--tinta-media); font-size: var(--t-mini); }
+
+/* ==========================================================================
+   SOBRE E CONTATO
+   ========================================================================== */
+.sobre { display: grid; gap: var(--e6);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  align-items: center; }
+.sobre h1 { margin-block: var(--e3) var(--e4); }
+.sobre__abre { font-size: var(--t-medio); }
+.sobre p { color: var(--tinta-media); }
+.sobre__acoes { display: flex; gap: var(--e3); flex-wrap: wrap; margin-top: var(--e5); }
+/* O visual da página "sobre" é a TRAMA em índigo com a régua embaixo — não uma
+   foto de banco de imagem de gente sorrindo em escritório, que é o que todo
+   fornecedor usa e ninguém acredita. */
+.sobre__visual {
+  aspect-ratio: 4 / 3; border-radius: var(--raio-g);
+  background-color: var(--indigo-fundo);
+  border-bottom: 10px solid var(--linha);
+}
+
+.promessa--forte {
+  background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  padding: var(--e5); display: flex; flex-direction: column; gap: var(--e2);
+}
+.promessa__rot {
+  align-self: flex-start; padding: var(--e1) var(--e3);
+  border-radius: var(--raio-pilula); background: var(--indigo-fundo); color: #fff;
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .1em;
+}
+.promessa--forte h3 { font-size: var(--t-medio); margin-block: var(--e2); }
+.promessa--forte p { color: var(--tinta-media); font-size: var(--t-mini); margin: 0; }
+
+.cab--claro h2 { color: #fff; }
+.lojas .loja { background: rgba(255,255,255,.06); border-radius: var(--raio-g);
+  padding: var(--e5); font-style: normal; }
+.lojas .loja h3 { color: #fff; margin-bottom: var(--e3); }
+.lojas .loja p { color: #C3CBDA; }
+
+.contato { display: grid; gap: var(--e6);
+  grid-template-columns: minmax(min(100%, 17rem), 1fr) minmax(0, 1.4fr);
+  align-items: start; }
+@media (max-width: 800px) { .contato { grid-template-columns: 1fr; } }
+.contato__canais { display: grid; gap: var(--e3); }
+.canal {
+  display: flex; flex-direction: column; gap: var(--e1);
+  padding: var(--e4); border: var(--borda); border-radius: var(--raio-g);
+  background: var(--papel); text-decoration: none; font-style: normal;
+  transition: border-color var(--transicao);
+}
+.canal:hover { border-color: var(--acao); }
+.canal strong { font-size: var(--t-mini); }
+.canal span { color: var(--tinta-media); font-size: var(--t-mini); }
+.canal__hora { font-size: var(--t-micro) !important; }
+.canal--zap { background: var(--acao-suave); border-color: #F2C3C7; }
+.canal--loja { background: var(--papel-2); }
+.contato__form {
+  background: var(--papel-2); border: var(--borda);
+  border-radius: var(--raio-g); padding: var(--e5);
+}
+
+/* ==========================================================================
+   CELULAR
+   ========================================================================== */
+@media (max-width: 900px) {
+  .produto__visual, .fechar__resumo { position: static; }
+  .filtros__rot { margin-left: 0; width: 100%; }
+  .carrinho__acoes, .carrinho__nota { justify-content: stretch; text-align: left; }
+  /* A tabela do pedido rola dentro de si mesma; a página nunca rola de lado. */
+  .carrinho { overflow-x: auto; }
+  .tabela-pedido { min-width: 32rem; }
+}
+
+/* Botão que já foi clicado: some o texto, fica o estado. Impede o segundo
+   clique nervoso que geraria dois pedidos iguais no painel. */
+.btn--indo { opacity: .6; pointer-events: none; }
+.trava { overflow: hidden; }
+
+/* ==========================================================================
+   AVISO DE CONSENTIMENTO
+
+   Faixa no rodapé da tela, não modal. Modal cobrindo a página empurra a pessoa
+   a clicar em qualquer coisa para ver o produto — e aceite obtido assim não é
+   aceite, é pedágio.
+
+   Os dois botões têm o MESMO tamanho. "Recusar" escondido em letra cinzinha é
+   o padrão do mercado e é justamente o que a ANPD chama de consentimento
+   viciado.
+   ========================================================================== */
+.consentimento {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+  display: flex; align-items: center; gap: var(--e5); flex-wrap: wrap;
+  padding: var(--e4) clamp(var(--e4), 4vw, var(--e7));
+  background: var(--indigo-fundo); color: #C3CBDA;
+  border-top: 3px solid var(--acao);
+  box-shadow: 0 -8px 28px rgba(20, 32, 56, .18);
+}
+.consentimento p { margin: 0; flex: 1; min-width: 16rem; font-size: var(--t-mini); }
+.consentimento strong { color: #fff; }
+.consentimento__acoes { display: flex; gap: var(--e3); flex-wrap: wrap; }
+.consentimento .btn--linha { color: #fff; border-color: rgba(255,255,255,.55); }
+.consentimento .btn--linha:hover { background: #fff; color: var(--indigo-fundo); }
+
+/* ==========================================================================
+   ==========================================================================
+   FOTOS E MOVIMENTO
+
+   ---------------------------------------------------------------------------
+   A REGRA QUE GOVERNA TUDO NESTE ARQUIVO
+
+   Nenhuma animação daqui muda o LAYOUT. Todas mexem só em `transform` e
+   `opacity` — as duas únicas propriedades que o navegador anima na placa de
+   vídeo, sem recalcular a posição de nada. Animar `height`, `top` ou `margin`
+   trava a rolagem em celular de galpão, que é exatamente onde este site é
+   usado.
+
+   E nenhuma animação é NECESSÁRIA para ver o conteúdo. Quem desliga o
+   JavaScript, ou pede menos movimento no sistema, recebe a página inteira
+   parada e completa — nunca um bloco invisível esperando um evento que não vai
+   acontecer. É por isso que `.revelar` só ganha o estado inicial escondido
+   depois que o script confirma que está vivo (a classe `js` no <html>).
+   ========================================================================== */
+
+/* ==========================================================================
+   IMAGEM DENTRO DE MOLDURA
+
+   `object-fit: cover` em cima de um contêiner com proporção fixa. É o que
+   permite trocar a foto no painel por outra de qualquer formato sem o layout
+   se desmontar — a foto é recortada, não esticada.
+   ========================================================================== */
+.art__img, .fcard__img, .post__img, .produto__img,
+.capa__foto, .secao__img, .faixa__img, .moldura__img, .materia__img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+
+/* ==========================================================================
+   CAPA COM FOTO
+   ========================================================================== */
+.capa {
+  position: relative; isolation: isolate;
+  overflow: hidden;
+}
+.capa__fundo { position: absolute; inset: 0; z-index: -2; }
+
+/* O VÉU é gradiente, não cor chapada: mais escuro à esquerda, onde mora o
+   texto, e mais claro à direita, onde a foto pode respirar. Véu uniforme
+   escuro o bastante para o texto apagaria a foto inteira. */
+.capa__veu {
+  position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(100deg,
+      rgba(20,32,56,.94) 0%,
+      rgba(20,32,56,.88) 42%,
+      rgba(20,32,56,.62) 72%,
+      rgba(20,32,56,.55) 100%);
+}
+
+/* KEN BURNS lentíssimo: 28 segundos para um zoom de 6%. Não é para ser
+   percebido como animação — é para a capa não parecer uma fotografia colada.
+   Rápido demais aqui vira videoclipe e cansa em duas visitas. */
+.capa__foto {
+  animation: respirar 28s ease-in-out infinite alternate;
+  transform-origin: 60% 40%;
+}
+@keyframes respirar {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1); }
+}
+
+/* ------------------------------------------------- entrada escalonada
+   Cada peça da capa sobe alguns pixels com fade, uma depois da outra. É CSS
+   puro com `animation-delay` — sem JavaScript, então funciona mesmo se o
+   script falhar, e começa junto com a primeira pintura. */
+.capa__tarja  { animation: subir .7s cubic-bezier(.2,.7,.3,1) .05s both; }
+.capa h1      { animation: subir .8s cubic-bezier(.2,.7,.3,1) .15s both; }
+.capa__chamada{ animation: subir .8s cubic-bezier(.2,.7,.3,1) .28s both; }
+.capa__acoes  { animation: subir .8s cubic-bezier(.2,.7,.3,1) .40s both; }
+.prova > div:nth-child(1) { animation: subir .7s cubic-bezier(.2,.7,.3,1) .52s both; }
+.prova > div:nth-child(2) { animation: subir .7s cubic-bezier(.2,.7,.3,1) .60s both; }
+.prova > div:nth-child(3) { animation: subir .7s cubic-bezier(.2,.7,.3,1) .68s both; }
+
+@keyframes subir {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* A RÉGUA se desenha da esquerda para a direita, como uma fita métrica sendo
+   puxada. Dura 1,1s e acontece uma vez só — é a assinatura de "aqui se vende
+   por metro", contada em movimento em vez de em palavra. */
+.regua--anima {
+  animation: medir 1.1s cubic-bezier(.2,.7,.3,1) .8s both;
+  transform-origin: left center;
+}
+@keyframes medir {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   FAIXA DO CATÁLOGO — o mesmo princípio da capa, mais baixa
+   ========================================================================== */
+.faixa {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding-block: var(--e6) var(--e7);
+  background: var(--indigo-fundo); color: #fff;
+}
+.faixa__fundo { position: absolute; inset: 0; z-index: -2; }
+.faixa__veu {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg,
+    rgba(20,32,56,.95) 0%, rgba(20,32,56,.86) 55%, rgba(20,32,56,.66) 100%);
+}
+.faixa__in { position: relative; }
+.faixa .cab { margin-bottom: 0; }
+.faixa h1 { color: #fff; font-size: var(--t-gg); }
+.faixa__img { animation: respirar 30s ease-in-out infinite alternate; }
+.migalha--clara { padding-top: 0; margin-bottom: var(--e5); color: #A9B6CE; }
+.migalha--clara b { color: #fff; }
+.migalha--clara span { color: rgba(255,255,255,.35); }
+.migalha--clara a:hover { color: var(--petala-ouro); }
+.faixa .cab__sobre { color: var(--petala-ouro); }
+.faixa .cab__texto { color: #C3CBDA; }
+
+/* ==========================================================================
+   SEÇÃO ESCURA COM FOTO AO FUNDO
+   ========================================================================== */
+.secao--foto { position: relative; isolation: isolate; overflow: hidden; }
+.secao__fundo { position: absolute; inset: 0; z-index: -2; }
+/* 0.22 de opacidade é o teto: acima disso o texto branco perde contraste sobre
+   as partes claras da foto, e a seção deixa de ser legível em celular no sol. */
+.secao__img { opacity: .22; }
+.secao__veu {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg,
+    rgba(20,32,56,.92) 0%, rgba(20,32,56,.82) 50%, rgba(20,32,56,.94) 100%);
+}
+
+/* ==========================================================================
+   CARTÃO DE ARTIGO — a foto respira no hover
+   ========================================================================== */
+.art__foto { position: relative; overflow: hidden; }
+.art__img {
+  position: absolute; inset: 0;
+  transition: transform 600ms cubic-bezier(.2,.6,.3,1);
+}
+/* Zoom de 6%, não de 20%. Zoom grande em foto de tecido borra a trama — que é
+   justamente o que a pessoa está tentando enxergar. */
+.art:hover .art__img { transform: scale(1.06); }
+.art {
+  transition: border-color var(--transicao), box-shadow var(--transicao),
+              transform 260ms cubic-bezier(.2,.6,.3,1);
+}
+.art:hover { transform: translateY(-4px); }
+/* O nome do artigo acende no vermelho da marca. É o sinal de "isto é um link"
+   sem sublinhar tudo. */
+.art__nome { transition: color var(--transicao); }
+.art:hover .art__nome { color: var(--acao); }
+
+/* ==========================================================================
+   CARTÃO DE FAMÍLIA — a textura acende por trás do texto
+   ========================================================================== */
+.fcard__foto {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden; border-radius: inherit;
+}
+/* Esmaecida ao ponto de ser TEXTURA, não foto. O cartão é de texto: o nome da
+   família e o resumo têm de ser lidos em diagonal, e foto nítida atrás disso
+   transforma oito cartões numa parede de ruído. */
+.fcard__img {
+  opacity: .10;
+  filter: saturate(.45);
+  transform: scale(1.02);
+  transition: opacity 500ms ease, transform 700ms cubic-bezier(.2,.6,.3,1),
+              filter 500ms ease;
+}
+.fcard:hover .fcard__img { opacity: .26; filter: saturate(.9); transform: scale(1.08); }
+.fcard > *:not(.fcard__foto) { position: relative; z-index: 1; }
+/* A tira colorida engorda no hover: o reconhecimento de família fica mais
+   forte justamente quando o olho está naquele cartão. */
+.fcard__tira { transition: height 240ms cubic-bezier(.2,.6,.3,1); }
+.fcard:hover .fcard__tira { height: 9px; }
+.fcard__n { transition: color var(--transicao); }
+.fcard:hover .fcard__n { color: var(--cor-f); }
+
+/* ==========================================================================
+   CARTÃO DO FEED COM CAPA
+   ========================================================================== */
+.post--foto { padding: 0; overflow: hidden; }
+.post--foto .post__capa {
+  display: block; position: relative; overflow: hidden;
+  aspect-ratio: 16 / 9; background: var(--indigo-fundo);
+}
+.post--foto .post__corpo {
+  display: flex; flex-direction: column; flex: 1;
+  padding: var(--e5); gap: var(--e2);
+}
+.post--foto .post__et { margin-bottom: 0; }
+.post__capa { position: relative; overflow: hidden; }
+.post__img {
+  position: absolute; inset: 0;
+  transition: transform 700ms cubic-bezier(.2,.6,.3,1);
+}
+.post:hover .post__img { transform: scale(1.05); }
+.post h3, .post__tit { transition: color var(--transicao); }
+.post:hover h3, .post:hover .post__tit { color: var(--acao); }
+/* A seta do "ler a matéria" anda para a direita. Movimento pequeno, e é o que
+   diz "vai levar você a outro lugar" sem precisar de ícone. */
+.post__mais::after, .fcard__ir::after {
+  content: " →"; display: inline-block;
+  transition: transform 240ms cubic-bezier(.2,.6,.3,1);
+}
+.post:hover .post__mais::after, .fcard:hover .fcard__ir::after {
+  transform: translateX(5px);
+}
+
+/* ==========================================================================
+   PÁGINA DO ARTIGO
+   ========================================================================== */
+.produto__foto { position: relative; overflow: hidden; }
+.produto__img {
+  position: absolute; inset: 0;
+  transition: opacity 260ms ease;
+}
+/* Ao trocar de cor, a foto esmaece por um instante e o tom novo aparece por
+   baixo. O olho registra a troca sem a página piscar. */
+.produto__foto.trocando .produto__img { opacity: .25; }
+
+/* ==========================================================================
+   AS DUAS LOJAS, COM FOTO
+   ========================================================================== */
+.lojas-par {
+  display: grid; gap: var(--e7);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+}
+@media (max-width: 900px) { .lojas-par { grid-template-columns: 1fr; } }
+.lojas-par__foto {
+  margin: 0; aspect-ratio: 4 / 3; overflow: hidden;
+  border-radius: var(--raio-g); position: relative;
+  border-bottom: 8px solid var(--acao);
+}
+.lojas-par__texto .loja { margin-bottom: var(--e4); }
+.lojas-par__texto .loja:last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   SOBRE — foto com a régua embaixo
+   ========================================================================== */
+.sobre__visual {
+  margin: 0; position: relative; overflow: hidden;
+  aspect-ratio: 4 / 3; border-radius: var(--raio-g);
+  background: var(--indigo-fundo);
+}
+.sobre__visual .regua {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 12px; background-color: rgba(255,255,255,.9);
+  border-bottom: none;
+}
+
+/* ==========================================================================
+   MATÉRIA DO FEED
+   ========================================================================== */
+.materia__capa {
+  margin: 0 0 var(--e6); overflow: hidden;
+  border-radius: var(--raio-g); aspect-ratio: 16 / 9;
+  background: var(--indigo-fundo);
+}
+
+/* A BARRA DE LEITURA. Fixa no topo, 3px, na cor de ação. Matéria técnica é
+   longa e quem lê no celular precisa saber quanto falta. */
+.progresso {
+  position: fixed; inset: 0 0 auto; height: 3px; z-index: 80;
+  background: transparent; pointer-events: none;
+}
+.progresso span {
+  display: block; height: 100%; width: 0;
+  background: var(--acao);
+  transform-origin: left center;
+}
+
+/* ==========================================================================
+   REVELAR AO ROLAR
+
+   O estado inicial só existe quando o script está vivo (`html.js`). Sem essa
+   trava, um erro de JavaScript deixaria o site inteiro em branco — os blocos
+   ficariam com opacity 0 esperando uma classe que nunca chega. É a diferença
+   entre um enfeite que falha bonito e um enfeite que apaga a loja.
+   ========================================================================== */
+.js .revelar {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms cubic-bezier(.2,.7,.3,1) var(--atraso, 0ms),
+              transform 650ms cubic-bezier(.2,.7,.3,1) var(--atraso, 0ms);
+  will-change: opacity, transform;
+}
+.js .revelar--on { opacity: 1; transform: none; will-change: auto; }
+
+/* ==========================================================================
+   TOPO QUE REAGE À ROLAGEM
+   ========================================================================== */
+.topo {
+  transition: background 280ms ease, box-shadow 280ms ease,
+              padding 280ms cubic-bezier(.2,.6,.3,1);
+}
+.topo--rolado {
+  box-shadow: 0 2px 18px rgba(28,28,27,.10);
+  backdrop-filter: saturate(1.4) blur(8px);
+  background: rgba(255,255,255,.93);
+}
+
+/* ==========================================================================
+   BOTÕES — o brilho que atravessa
+
+   Um reflexo diagonal cruza o botão de ação no hover. Dura 550ms e não se
+   repete. É o tipo de detalhe que faz o botão parecer material, e não um
+   retângulo pintado — mas repetido em laço viraria pisca-pisca de vitrine.
+   ========================================================================== */
+.btn { position: relative; overflow: hidden; }
+.btn--acao::after {
+  content: ""; position: absolute; inset: 0 auto 0 -60%;
+  width: 45%; pointer-events: none;
+  background: linear-gradient(100deg,
+    transparent, rgba(255,255,255,.30), transparent);
+  transform: skewX(-18deg) translateX(0);
+  transition: transform 550ms cubic-bezier(.3,.7,.4,1);
+}
+.btn--acao:hover::after { transform: skewX(-18deg) translateX(360%); }
+.btn--linha:hover { transform: translateY(-1px); }
+
+/* ==========================================================================
+   CHIPS E ETIQUETAS DE FAMÍLIA
+   ========================================================================== */
+.chip:hover { transform: translateY(-1px); }
+.fam-linha__i { transition: transform var(--transicao), border-color var(--transicao),
+                            background var(--transicao), color var(--transicao); }
+.fam-linha__i:hover { transform: translateY(-2px); }
+.fam-linha__i::before { transition: transform var(--transicao); }
+.fam-linha__i:hover::before { transform: scale(1.4); }
+
+/* ==========================================================================
+   O CARTÃO DE CANAL, A PROMESSA E A LOJA
+   ========================================================================== */
+.canal, .promessa--forte, .loja {
+  transition: transform 260ms cubic-bezier(.2,.6,.3,1),
+              border-color var(--transicao), box-shadow var(--transicao);
+}
+.canal:hover, .promessa--forte:hover { transform: translateY(-3px); box-shadow: var(--sombra-g); }
+
+/* A tabela de faixas destaca a linha sob o cursor: em atacado, comparar preço
+   por quantidade é leitura horizontal, e a linha realçada evita ler errado. */
+.faixas tbody tr { transition: background var(--transicao); }
+.faixas tbody tr:hover { background: var(--papel-2); }
+
+/* O cartão de cor na página do artigo pulsa de leve quando é o escolhido. */
+.cor--on { animation: escolhida 400ms cubic-bezier(.3,1.4,.5,1); }
+@keyframes escolhida {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.16); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   MENOS MOVIMENTO — o desligamento total
+
+   O design system já corta a duração de tudo. Aqui vão as animações que são
+   INFINITAS (o Ken Burns) e as que dependem de estado inicial escondido: elas
+   precisam ser desligadas de vez, não só aceleradas, senão quem pediu menos
+   movimento recebe um zoom eterno de fundo.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .capa__foto, .faixa__img { animation: none; transform: none; }
+  .js .revelar { opacity: 1; transform: none; transition: none; }
+  .regua--anima { animation: none; transform: none; }
+  .btn--acao::after { display: none; }
+  .art:hover, .canal:hover, .promessa--forte:hover,
+  .fcard:hover, .chip:hover, .fam-linha__i:hover { transform: none; }
+  .art:hover .art__img, .post:hover .post__img,
+  .fcard:hover .fcard__img { transform: none; }
+}

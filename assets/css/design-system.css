@@ -1,0 +1,406 @@
+/* ==========================================================================
+   IZATEC TECIDOS — DESIGN SYSTEM
+
+   Tudo aqui saiu do LOGOTIPO, e nada foi inventado por gosto. O logo já é uma
+   decisão tomada: uma flor de oito pétalas coloridas, um anel VERMELHO fechado
+   no centro, e "IZATEC" em dois cinzas. Um site que ignorasse isso obrigaria a
+   marca a viver duas vidas — a do material impresso e a da tela.
+
+   ---------------------------------------------------------------------------
+   AS TRÊS LEITURAS QUE ORGANIZAM O SISTEMA
+
+   1. O VERMELHO É O ÚNICO ELEMENTO SATURADO E FECHADO do logotipo. Todas as
+      pétalas são translúcidas e abertas; o anel é opaco e circular. É para ele
+      que o olho vai primeiro. Então ele é a cor de AÇÃO — botão de comprar,
+      pedir amostra, chamar no WhatsApp — e de mais nada. Vermelho usado como
+      enfeite gastaria justamente o que o faz funcionar.
+
+   2. AS OITO PÉTALAS SÃO UM SISTEMA DE CATEGORIAS PRONTO. Um catálogo de
+      tecidos tem dezenas de famílias, e quem compra volta ao site procurando
+      "aquele jeans" — não o nome exato. Cada família ganha uma pétala, e a cor
+      passa a ser um atalho de reconhecimento. Inventar uma paleta nova aqui
+      seria jogar fora um ativo que a marca já tem impresso na fachada.
+
+   3. O ÍNDIGO NÃO ESTÁ NO LOGO, E ENTRA MESMO ASSIM. É a cor do jeans, que é o
+      carro-chefe da loja. Ele é a SUPERFÍCIE escura do site — cabeçalho de
+      seção, rodapé, fundo de destaque —, nunca acento. Justificativa: o produto
+      principal dita o ambiente, e um cinza neutro faria uma loja de tecidos
+      parecer um catálogo de peças de máquina.
+
+   ---------------------------------------------------------------------------
+   O QUE ESTE SITE NÃO PODE PARECER
+
+   Nada de sombra difusa em card branco sobre cinza-claro, nada de gradiente
+   roxo, nada de ícone de linha genérico. Isso é a assinatura de tema pronto, e
+   quem compra tecido em Caruaru reconhece — ele já viu esse site em vinte
+   fornecedores. A âncora visual daqui é o TÊXTIL: trama, ourela, régua,
+   gramatura. Linhas retas, medidas visíveis, foto grande do tecido.
+   ========================================================================== */
+
+:root {
+  /* ======================================================================
+     COR — AÇÃO
+     O vermelho do anel, medido no arquivo. Um tom mais escuro para o estado
+     pressionado, porque escurecer mantém a cor reconhecível; clarear a
+     dessaturaria e ela deixaria de ser "o vermelho da Izatec".
+     ====================================================================== */
+  --acao:            #E30613;
+  --acao-forte:      #B30410;
+  --acao-suave:      #FDECEE;
+  --acao-contraste:  #FFFFFF;
+
+  /* ======================================================================
+     COR — TINTA E SUPERFÍCIE
+     Os dois cinzas da marca ("IZA" claro, "TEC" escuro) viram a escala de
+     texto. O grafite é o texto de leitura; o cinza médio é o apoio.
+     ====================================================================== */
+  --tinta:           #3C3C3B;   /* o "TEC" do logotipo */
+  --tinta-media:     #8A8A89;   /* o "IZA" e o "TECIDOS" */
+  --tinta-fraca:     #B4B4B3;
+  --papel:           #FFFFFF;
+  --papel-2:         #F7F6F4;   /* quente, não azulado: tecido não é aço */
+  --linha:           #E4E2DE;
+
+  /* ======================================================================
+     COR — ÍNDIGO (superfície escura)
+     Três passos, do algodão cru ao jeans lavado uma vez. Usados como FUNDO,
+     nunca como texto sobre branco — em corpo de texto o índigo compete com
+     o vermelho e a hierarquia se perde.
+     ====================================================================== */
+  --indigo:          #1B2A4A;
+  --indigo-fundo:    #142038;
+  --indigo-claro:    #2E4372;
+
+  /* ======================================================================
+     COR — AS OITO PÉTALAS
+     Medidas do logotipo, em sentido horário a partir do topo. Cada uma
+     nomeia uma família de tecido no catálogo (ver `--fam-*` abaixo).
+
+     Elas aparecem em TIRA FINA e em etiqueta — nunca como fundo de bloco
+     grande. Oito cores fortes disputando área transformam catálogo em
+     parque de diversões, e o comprador perde o produto de vista.
+     ====================================================================== */
+  --petala-laranja:  #E8730C;
+  --petala-ouro:     #F5B400;
+  --petala-limao:    #8CC63E;
+  --petala-verde:    #5AAE3A;
+  --petala-uva:      #9B2C8F;
+  --petala-caramelo: #C8963E;
+  --petala-agua:     #3FA9C9;
+  --petala-petroleo: #2E8B9E;
+
+  /* Famílias de tecido → pétala. O nome semântico é o que o HTML usa: se um
+     dia a cor de uma família mudar, muda AQUI, e não em trinta lugares. */
+  --fam-jeans:       var(--indigo-claro);
+  --fam-malha:       var(--petala-limao);
+  --fam-tricoline:   var(--petala-agua);
+  --fam-alfaiataria: var(--petala-petroleo);
+  --fam-moletom:     var(--petala-caramelo);
+  --fam-viscose:     var(--petala-uva);
+  --fam-sarja:       var(--petala-laranja);
+  --fam-aviamentos:  var(--petala-ouro);
+
+  /* Sinais de estoque. Verde do logo, para não introduzir cor nova. */
+  --sinal-ok:        var(--petala-verde);
+  --sinal-atencao:   var(--petala-ouro);
+  --sinal-fim:       var(--acao);
+
+  /* ======================================================================
+     TIPOGRAFIA
+
+     Sem fonte de CDN: uma requisição a servidor de terceiro atrasa a primeira
+     pintura, conta ao Google quem visitou a página e some se a rede do
+     galpão oscilar. A pilha abaixo usa o que o sistema já tem, e nas duas
+     plataformas que importam aqui (Android e Windows) o resultado é o mesmo
+     desenho geométrico do logotipo.
+
+     O logo é uma grotesca larga e sem contraste. A pilha acompanha.
+     ====================================================================== */
+  --fonte: "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue",
+           system-ui, -apple-system, Arial, sans-serif;
+  /* Números que ALINHAM em coluna: preço, metragem e gramatura vivem em
+     tabela, e algarismo de largura variável faz a coluna tremer. */
+  --fonte-num: "Segoe UI Variable Display", ui-monospace, "Cascadia Mono",
+               Consolas, "Roboto Mono", monospace;
+
+  /* Escala fluida: um passo de 1,25 (terça maior), do 320px ao 1600px.
+     `clamp` no lugar de media query porque o texto precisa acompanhar a
+     largura do CONTÊINER, não só a da janela. */
+  --t-micro: clamp(.69rem, .66rem + .12vw, .75rem);
+  --t-mini:  clamp(.78rem, .74rem + .16vw, .86rem);
+  --t-base:  clamp(.97rem, .93rem + .2vw, 1.06rem);
+  --t-medio: clamp(1.12rem, 1.05rem + .32vw, 1.3rem);
+  --t-g:     clamp(1.35rem, 1.2rem + .7vw, 1.85rem);
+  --t-gg:    clamp(1.75rem, 1.4rem + 1.6vw, 2.9rem);
+  --t-ggg:   clamp(2.2rem, 1.5rem + 3.2vw, 4.4rem);
+
+  --peso-normal: 400;
+  --peso-medio:  600;
+  --peso-forte:  800;
+
+  /* ======================================================================
+     RITMO — escala de 4px
+
+     Tudo é múltiplo de 4. Não é preciosismo: com passo livre, cada
+     componente ganha um respiro diferente e a página perde o alinhamento
+     óptico sem ninguém saber dizer por quê.
+     ====================================================================== */
+  --e1: .25rem;  --e2: .5rem;   --e3: .75rem;  --e4: 1rem;
+  --e5: 1.5rem;  --e6: 2rem;    --e7: 3rem;    --e8: 4rem;
+  --e9: 6rem;    --e10: 8rem;
+
+  /* ======================================================================
+     FORMA
+
+     Raio PEQUENO, quase reto. O logotipo é geométrico e a tipografia é
+     retangular; canto muito arredondado traria uma doçura que a marca não
+     tem — e é a assinatura visual de tema pronto.
+
+     A exceção é `--raio-pilula`, só para etiqueta de família: ali o formato
+     oval ecoa a pétala.
+     ====================================================================== */
+  --raio:        4px;
+  --raio-g:      8px;
+  --raio-pilula: 999px;
+  --borda:       1px solid var(--linha);
+
+  /* Sombra quase inexistente. Profundidade aqui vem de LINHA e de contraste
+     de superfície, como numa etiqueta de tecido — não de card flutuante. */
+  --sombra:   0 1px 2px rgba(28, 28, 27, .06);
+  --sombra-g: 0 8px 28px rgba(28, 28, 27, .10);
+
+  --largura:      1240px;
+  --largura-texto: 68ch;   /* leitura confortável em corpo de texto */
+
+  --transicao: 160ms cubic-bezier(.2, .6, .3, 1);
+}
+
+/* ==========================================================================
+   ACESSIBILIDADE — quem pediu menos movimento recebe menos movimento.
+   Regra global, e não por componente: uma animação esquecida em um lugar
+   basta para causar mal-estar em quem tem sensibilidade vestibular.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* O cabeçalho fica preso no topo; sem isto, uma âncora deixa o título
+     escondido atrás dele. */
+  scroll-padding-top: 5.5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--fonte);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  line-height: 1.1;
+  font-weight: var(--peso-forte);
+  letter-spacing: -.02em;   /* a grotesca do logo é levemente compacta */
+  text-wrap: balance;       /* título não fica com uma palavra órfã na linha */
+}
+h1 { font-size: var(--t-ggg); }
+h2 { font-size: var(--t-gg); }
+h3 { font-size: var(--t-g); }
+h4 { font-size: var(--t-medio); }
+
+p { margin: 0 0 var(--e4); text-wrap: pretty; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+
+img, picture, video, svg { display: block; max-width: 100%; height: auto; }
+
+/* O foco NUNCA é removido — é como se navega sem mouse, e um galpão de
+   confecção tem gente usando o site com uma mão só, no teclado. */
+:focus-visible {
+  outline: 3px solid var(--acao);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--acao); color: #fff; }
+
+/* ==========================================================================
+   ESTRUTURA
+   ========================================================================== */
+.env {
+  width: min(100% - 2.5rem, var(--largura));
+  margin-inline: auto;
+}
+@media (max-width: 480px) { .env { width: min(100% - 1.75rem, var(--largura)); } }
+
+.secao { padding-block: clamp(var(--e7), 6vw, var(--e9)); }
+.secao--escura { background: var(--indigo-fundo); color: #fff; }
+.secao--papel  { background: var(--papel-2); }
+
+/* Cabeçalho de seção: sobretítulo curto + título + linha. O sobretítulo é
+   funcional, não decorativo — em página longa, ele diz onde a pessoa está
+   sem obrigá-la a ler o título inteiro. */
+.cab { max-width: var(--largura-texto); margin-bottom: var(--e6); }
+.cab__sobre {
+  display: inline-flex; align-items: center; gap: var(--e2);
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--acao); margin-bottom: var(--e3);
+}
+.cab__sobre::before {
+  content: ""; width: 1.75rem; height: 2px; background: currentColor;
+}
+.secao--escura .cab__sobre { color: var(--petala-ouro); }
+.cab__texto { color: var(--tinta-media); font-size: var(--t-medio); margin-top: var(--e3); }
+.secao--escura .cab__texto { color: #C3CBDA; }
+
+/* ==========================================================================
+   GRADE
+
+   `auto-fit` + `minmax` no lugar de colunas fixas: o catálogo tem de caber
+   tanto num celular de 320px quanto num monitor de 4K sem uma media query
+   por faixa. O mínimo de 15rem foi escolhido pela AMOSTRA DE TECIDO — abaixo
+   disso a foto deixa de mostrar a trama, que é o que a pessoa foi ver.
+   ========================================================================== */
+.grade { display: grid; gap: var(--e5); }
+.grade--2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+.grade--3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+.grade--4 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+
+/* ==========================================================================
+   BOTÕES
+
+   Três níveis e nada além. Um quarto estilo faria a página ter duas ações
+   "principais", e página com duas ações principais não tem nenhuma.
+   ========================================================================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--e2);
+  padding: var(--e3) var(--e5);
+  min-height: 3rem;          /* alvo de toque: o site é usado em pé, no galpão */
+  border: 2px solid transparent; border-radius: var(--raio);
+  font: inherit; font-weight: var(--peso-forte);
+  font-size: var(--t-mini); letter-spacing: .04em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background var(--transicao), color var(--transicao),
+              border-color var(--transicao), transform var(--transicao);
+}
+.btn:active { transform: translateY(1px); }
+
+.btn--acao { background: var(--acao); color: var(--acao-contraste); border-color: var(--acao); }
+.btn--acao:hover { background: var(--acao-forte); border-color: var(--acao-forte); }
+
+.btn--linha { background: transparent; color: var(--tinta); border-color: var(--tinta); }
+.btn--linha:hover { background: var(--tinta); color: #fff; }
+.secao--escura .btn--linha { color: #fff; border-color: rgba(255,255,255,.5); }
+.secao--escura .btn--linha:hover { background: #fff; color: var(--indigo-fundo); border-color: #fff; }
+
+.btn--texto {
+  padding-inline: 0; min-height: auto; text-transform: none;
+  font-size: var(--t-base); letter-spacing: 0; color: var(--acao);
+  text-decoration: underline; text-underline-offset: .25em;
+}
+
+.btn--largo { width: 100%; }
+
+/* ==========================================================================
+   ETIQUETA DE FAMÍLIA
+
+   A cor entra em TIRA, à esquerda — não como fundo. Fundo colorido em oito
+   variações vira ruído; a tira dá o reconhecimento sem tomar a atenção do
+   produto, e continua legível para quem não distingue as cores, porque o
+   NOME está escrito ali do lado.
+   ========================================================================== */
+.fam {
+  display: inline-flex; align-items: center; gap: var(--e2);
+  padding: var(--e1) var(--e3) var(--e1) var(--e2);
+  border-radius: var(--raio-pilula);
+  background: var(--papel-2);
+  font-size: var(--t-micro); font-weight: var(--peso-forte);
+  letter-spacing: .08em; text-transform: uppercase; color: var(--tinta);
+}
+.fam::before {
+  content: ""; width: .5rem; height: .5rem; border-radius: 50%;
+  background: var(--cor-fam, var(--tinta-media)); flex: none;
+}
+.fam--jeans       { --cor-fam: var(--fam-jeans); }
+.fam--malha       { --cor-fam: var(--fam-malha); }
+.fam--tricoline   { --cor-fam: var(--fam-tricoline); }
+.fam--alfaiataria { --cor-fam: var(--fam-alfaiataria); }
+.fam--moletom     { --cor-fam: var(--fam-moletom); }
+.fam--viscose     { --cor-fam: var(--fam-viscose); }
+.fam--sarja       { --cor-fam: var(--fam-sarja); }
+.fam--aviamentos  { --cor-fam: var(--fam-aviamentos); }
+
+/* ==========================================================================
+   FICHA TÉCNICA — o componente mais importante do site
+
+   Quem compra tecido para produzir não decide pela foto: decide por
+   composição, gramatura, largura útil e encolhimento. Um site de tecidos que
+   esconde esses números obriga a ligar para perguntar — e a ligação é
+   exatamente o passo que ele queria evitar ao entrar no site às 22h.
+
+   Por isso a ficha é DADO TABULAR de verdade (`<dl>`), não parágrafo: dá para
+   ler em diagonal, comparar dois produtos e ser lido por leitor de tela.
+   ========================================================================== */
+.ficha { display: grid; gap: 1px; background: var(--linha); border: var(--borda); border-radius: var(--raio); overflow: hidden; }
+.ficha__linha { display: grid; grid-template-columns: minmax(9rem, 40%) 1fr; background: var(--papel); }
+.ficha__rot { padding: var(--e3) var(--e4); font-size: var(--t-mini); color: var(--tinta-media);
+  text-transform: uppercase; letter-spacing: .06em; font-weight: var(--peso-medio); }
+.ficha__val { padding: var(--e3) var(--e4); font-family: var(--fonte-num);
+  font-weight: var(--peso-medio); font-variant-numeric: tabular-nums; }
+
+/* ==========================================================================
+   TRAMA — a textura da marca
+
+   Uma malha diagonal fininha, na cor da tinta, com opacidade baixíssima.
+   Ecoa a sarja do jeans (que é diagonal, não reta) e resolve o problema de
+   ter grandes áreas escuras chapadas sem recorrer a gradiente.
+
+   Em CSS puro: é 1 KB, escala em qualquer densidade de tela e não custa
+   requisição.
+   ========================================================================== */
+.trama {
+  background-image: repeating-linear-gradient(
+    63deg,                                   /* o ângulo da sarja */
+    rgba(255,255,255,.045) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+/* ==========================================================================
+   RÉGUA — separador com marcas de medida
+
+   Serve de divisor entre seções e diz, sem palavra nenhuma, que aqui se
+   vende por metro. É o tipo de detalhe que faz o site parecer feito para
+   este negócio, e não adaptado de outro.
+   ========================================================================== */
+.regua {
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    90deg, var(--linha) 0 1px, transparent 1px 12px
+  );
+  border-bottom: var(--borda);
+}
+
+/* Utilitários mínimos — a lista é curta de propósito: utilitário demais
+   vira uma segunda linguagem paralela ao CSS do componente. */
+.centro   { text-align: center; }
+.so-leitor { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

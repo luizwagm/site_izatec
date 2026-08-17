@@ -1,0 +1,392 @@
+/* ==========================================================================
+   PAINEL — /admin e /restrito
+
+   ---------------------------------------------------------------------------
+   O PAINEL NÃO É O SITE, E NÃO DEVE PARECER O SITE
+
+   O site vende: tem respiro largo, título grande, foto. O painel é ferramenta
+   de trabalho — quem está aqui já foi convencido e quer terminar rápido.
+
+   Três decisões que vêm disso:
+
+   · DENSIDADE. Espaçamento menor, tipo menor, tabela apertada. Uma tela cabe
+     trinta cores de tecido; no espaçamento do site caberiam oito, e a pessoa
+     rolaria quatro vezes para conferir a mesma carga.
+   · O ÍNDIGO OCUPA O MENU, não o conteúdo. Barra escura fixa à esquerda dá
+     âncora visual permanente e devolve todo o branco ao trabalho.
+   · O VERMELHO CONTINUA SENDO SÓ AÇÃO. Salvar é vermelho; apagar é vermelho
+     em texto, sem preenchimento — porque um botão vermelho cheio ao lado do
+     outro faz o dedo errar o alvo justamente na ação que não se desfaz.
+   ========================================================================== */
+
+body.painel {
+  display: grid;
+  grid-template-columns: 15.5rem 1fr;
+  min-height: 100vh;
+  background: var(--papel-2);
+  font-size: var(--t-mini);
+}
+
+/* ==========================================================================
+   MENU LATERAL
+   ========================================================================== */
+.lado {
+  background: var(--indigo-fundo);
+  color: #C3CBDA;
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+
+.lado__marca {
+  display: flex; align-items: center; gap: var(--e3);
+  padding: var(--e5) var(--e4);
+  text-decoration: none; color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.lado__marca span { display: flex; flex-direction: column; line-height: 1.15; }
+.lado__marca b { font-size: var(--t-base); font-weight: var(--peso-forte); letter-spacing: -.02em; }
+.lado__marca span span, .lado__marca > span { font-size: var(--t-micro); }
+.lado__marca > span > :not(b) { color: var(--petala-ouro); }
+/* A flor do logotipo reduzida a um disco com o anel vermelho: no tamanho de
+   24px as oito pétalas viram uma mancha, e um símbolo ilegível é pior que um
+   símbolo simples. */
+.lado__flor {
+  width: 1.75rem; height: 1.75rem; flex: none; border-radius: 50%;
+  background: var(--petala-ouro);
+  box-shadow: inset 0 0 0 4px var(--acao), 0 0 0 3px rgba(227,6,19,.25);
+}
+
+.lado__nav { padding: var(--e4) var(--e2); flex: 1; }
+.lado__grupo { margin-bottom: var(--e5); }
+.lado__grupo h2 {
+  font-size: var(--t-micro); text-transform: uppercase; letter-spacing: .14em;
+  color: rgba(255,255,255,.42); font-weight: var(--peso-forte);
+  padding: 0 var(--e3) var(--e2);
+}
+.lado__i {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--e2) var(--e3); border-radius: var(--raio);
+  color: #C3CBDA; text-decoration: none; font-weight: var(--peso-medio);
+  transition: background var(--transicao), color var(--transicao);
+}
+.lado__i:hover { background: rgba(255,255,255,.07); color: #fff; }
+/* A barra vermelha do item ativo entra pela ESQUERDA, sem preencher o fundo:
+   preenchimento vermelho gastaria a cor de ação em algo que não é ação. */
+.lado__i--on {
+  background: rgba(255,255,255,.1); color: #fff;
+  box-shadow: inset 3px 0 0 var(--acao);
+}
+.lado__selo {
+  background: var(--acao); color: #fff; border-radius: var(--raio-pilula);
+  padding: 0 .45rem; font-size: var(--t-micro); font-weight: var(--peso-forte);
+}
+.lado__ver { padding: var(--e4); margin: 0; font-size: var(--t-micro);
+  color: rgba(255,255,255,.35); font-family: var(--fonte-num); }
+
+/* ==========================================================================
+   TOPO E CONTEÚDO
+   ========================================================================== */
+.corpo { min-width: 0; }   /* sem isto a tabela larga estoura a grade */
+
+.pt {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--e4); flex-wrap: wrap;
+  padding: var(--e4) var(--e5);
+  background: var(--papel); border-bottom: var(--borda);
+  position: sticky; top: 0; z-index: 5;
+}
+.pt h1 { font-size: var(--t-g); }
+.pt__dir { display: flex; align-items: center; gap: var(--e4); }
+.pt__site { font-size: var(--t-micro); color: var(--tinta-media); text-decoration: none; }
+.pt__site:hover { color: var(--acao); }
+.pt__eu { display: flex; flex-direction: column; line-height: 1.2;
+  font-weight: var(--peso-medio); font-size: var(--t-micro); }
+.pt__eu em { color: var(--tinta-media); font-style: normal; font-weight: 400; }
+.pt__sair {
+  background: none; border: var(--borda); border-radius: var(--raio);
+  padding: var(--e2) var(--e3); font: inherit; cursor: pointer;
+  color: var(--tinta-media);
+}
+.pt__sair:hover { border-color: var(--acao); color: var(--acao); }
+
+.conteudo { padding: var(--e5); max-width: 1400px; }
+
+/* ==========================================================================
+   BLOCOS
+   ========================================================================== */
+.caixa {
+  background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  padding: var(--e5); margin-bottom: var(--e5);
+}
+.caixa h2 { font-size: var(--t-medio); margin-bottom: var(--e4); }
+
+.duas { display: grid; gap: var(--e5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+.dois { display: grid; gap: var(--e4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+.tres { display: grid; gap: var(--e4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); }
+.quatro { display: grid; gap: var(--e4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+
+.dica {
+  background: var(--papel-2); border-left: 3px solid var(--petala-agua);
+  padding: var(--e3) var(--e4); margin-bottom: var(--e5);
+  border-radius: 0 var(--raio) var(--raio) 0; color: var(--tinta-media);
+}
+.dica code { background: #fff; padding: 0 .25rem; border-radius: 2px; }
+
+.nada { color: var(--tinta-media); font-style: italic; padding: var(--e4) 0; margin: 0; }
+
+.aviso { padding: var(--e3) var(--e4); border-radius: var(--raio);
+  margin-bottom: var(--e4); font-weight: var(--peso-medio); }
+.aviso--ok   { background: #EEF7E8; color: #2F6B18; border-left: 3px solid var(--sinal-ok); }
+.aviso--erro { background: var(--acao-suave); color: var(--acao-forte);
+  border-left: 3px solid var(--acao); }
+
+/* ==========================================================================
+   CARTÕES DE NÚMERO
+   ========================================================================== */
+.cartoes { display: grid; gap: var(--e4); margin-bottom: var(--e5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr)); }
+.cartao {
+  background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  padding: var(--e4); text-decoration: none; color: inherit;
+  display: flex; flex-direction: column; gap: var(--e1);
+  transition: border-color var(--transicao), transform var(--transicao);
+}
+.cartao:hover { border-color: var(--acao); transform: translateY(-2px); }
+.cartao__n { font-family: var(--fonte-num); font-size: var(--t-gg);
+  font-weight: var(--peso-forte); line-height: 1; letter-spacing: -.03em; }
+.cartao__r { font-size: var(--t-micro); color: var(--tinta-media);
+  text-transform: uppercase; letter-spacing: .08em; font-weight: var(--peso-medio); }
+
+/* ==========================================================================
+   TABELA
+
+   Cabeçalho grudado no topo: a tela de estoque tem cem linhas, e sem isto
+   quem rola até a metade não sabe mais qual coluna é preço e qual é estoque.
+   ========================================================================== */
+.tab { width: 100%; border-collapse: collapse; font-size: var(--t-mini); }
+.tab th {
+  text-align: left; font-size: var(--t-micro); text-transform: uppercase;
+  letter-spacing: .08em; color: var(--tinta-media); font-weight: var(--peso-forte);
+  padding: var(--e2) var(--e3); border-bottom: 2px solid var(--linha);
+  background: var(--papel); position: sticky; top: 4.25rem; z-index: 2;
+}
+.tab td { padding: var(--e3); border-bottom: var(--borda); vertical-align: middle; }
+.tab tr:hover td { background: var(--papel-2); }
+.tab td .sub { display: block; color: var(--tinta-media); font-size: var(--t-micro); }
+.tab code { font-family: var(--fonte-num); font-size: var(--t-micro); }
+.tab__fim { text-align: right; white-space: nowrap; }
+.tab__fim > * { margin-left: var(--e2); }
+.tab--grade td { padding: var(--e1) var(--e2); }
+.tr--novo td { background: #FFFBEA; }
+.tr--novo:hover td { background: #FFF6D6; }
+.tr--sub td { background: var(--indigo-fundo); color: #fff; }
+.tr--sub:hover td { background: var(--indigo); }
+.tr--sub .sub { color: rgba(255,255,255,.6); display: inline; margin-left: var(--e2); }
+.tr--sub .btn--texto { color: var(--petala-ouro); float: right; }
+
+.bolinha { display: inline-block; width: .75rem; height: .75rem; border-radius: 50%;
+  border: 1px solid rgba(0,0,0,.15); vertical-align: -1px; margin-right: var(--e2); }
+
+.pino {
+  display: inline-block; padding: .1rem .5rem; border-radius: var(--raio-pilula);
+  background: var(--papel-2); border: var(--borda);
+  font-size: var(--t-micro); font-weight: var(--peso-medio); text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.pino--ok         { background: #EEF7E8; border-color: #CBE5B9; color: #2F6B18; }
+.pino--novo       { background: #FFF3CD; border-color: #F1DFA0; color: #7A5B00; }
+.pino--confirmado { background: #E7F1FA; border-color: #C3DCF0; color: #1D4E77; }
+.pino--separando  { background: #EDE7F6; border-color: #D3C6E8; color: #4A2E7A; }
+.pino--enviado    { background: #E4F4F7; border-color: #BFE3EA; color: #14606E; }
+.pino--entregue   { background: #EEF7E8; border-color: #CBE5B9; color: #2F6B18; }
+.pino--cancelado  { background: var(--acao-suave); border-color: #F2C3C7; color: var(--acao-forte); }
+
+.lista-seca { list-style: none; margin: 0 0 var(--e4); padding: 0; }
+.lista-seca li { padding: var(--e2) 0; border-bottom: var(--borda);
+  display: flex; flex-wrap: wrap; gap: var(--e2) var(--e3); align-items: baseline; }
+.lista-seca span { color: var(--tinta-media); }
+.lista-seca em { margin-left: auto; font-style: normal; font-family: var(--fonte-num);
+  font-weight: var(--peso-medio); }
+
+.ficha-painel { display: grid; gap: 0; margin: 0; }
+.ficha-painel > div { display: grid; grid-template-columns: 9rem 1fr;
+  padding: var(--e2) 0; border-bottom: var(--borda); }
+.ficha-painel dt { color: var(--tinta-media); font-size: var(--t-micro);
+  text-transform: uppercase; letter-spacing: .06em; }
+.ficha-painel dd { margin: 0; font-weight: var(--peso-medio); }
+
+.obs { background: #FFFBEA; border-left: 3px solid var(--petala-ouro);
+  padding: var(--e3) var(--e4); margin-top: var(--e4); }
+
+/* ==========================================================================
+   FORMULÁRIOS
+   ========================================================================== */
+.campo { display: flex; flex-direction: column; gap: var(--e1); margin-bottom: var(--e4); }
+.campo label { font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .06em; color: var(--tinta-media);
+  display: flex; gap: var(--e2); align-items: baseline; }
+.campo label code { text-transform: none; letter-spacing: 0; color: var(--tinta-fraca);
+  font-family: var(--fonte-num); font-size: var(--t-micro); }
+.campo .ajuda { font-size: var(--t-micro); color: var(--tinta-media); }
+.campo--check label { text-transform: none; letter-spacing: 0; font-weight: var(--peso-medio);
+  color: var(--tinta); font-size: var(--t-mini); }
+
+input, select, textarea {
+  font: inherit; font-size: var(--t-mini); color: var(--tinta);
+  background: var(--papel);
+  border: var(--borda); border-radius: var(--raio);
+  padding: var(--e2) var(--e3); width: 100%;
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--acao); box-shadow: 0 0 0 3px var(--acao-suave); outline: none;
+}
+input[type="checkbox"], input[type="radio"] { width: auto; }
+input[type="color"] { padding: 2px; height: 2rem; width: 3rem; cursor: pointer; }
+input[type="number"] { font-family: var(--fonte-num); font-variant-numeric: tabular-nums; }
+textarea { resize: vertical; line-height: 1.55; }
+/* O texto da matéria é o único campo em fonte de largura fixa: linha em branco
+   separa parágrafo, e num tipo proporcional é difícil ver onde ela está. */
+#m-cor { font-family: var(--fonte-num); font-size: var(--t-mini); }
+
+.linha-forma { display: flex; gap: var(--e2); align-items: center; flex-wrap: wrap; }
+.linha-forma input { width: auto; min-width: 6rem; }
+.linha-forma--nova { margin-top: var(--e4); padding-top: var(--e4);
+  border-top: 2px dashed var(--linha); }
+
+.barra-acao { display: flex; gap: var(--e3); align-items: center;
+  margin-top: var(--e5); flex-wrap: wrap; }
+.barra-acao--topo { margin: 0 0 var(--e4); justify-content: space-between; }
+/* A barra de salvar da tela de estoque fica presa embaixo: a grade tem cem
+   linhas, e voltar ao fim da página para salvar é o passo em que se perde
+   meia hora de digitação. */
+.barra-acao--fixa {
+  position: sticky; bottom: 0; background: var(--papel-2);
+  padding: var(--e3) 0; border-top: var(--borda); margin-top: 0;
+}
+
+.btn--perigo {
+  background: none; border: none; padding: var(--e1) var(--e2);
+  font: inherit; font-size: var(--t-micro); color: var(--acao);
+  text-decoration: underline; text-underline-offset: .2em; cursor: pointer;
+}
+.btn--perigo:hover { color: var(--acao-forte); }
+
+/* Situação do pedido: botões grandes, lado a lado. O ativo fica preenchido. */
+.situacoes { display: flex; gap: var(--e2); flex-wrap: wrap; }
+.sit {
+  padding: var(--e2) var(--e4); min-height: 2.75rem;
+  border: var(--borda); border-radius: var(--raio); background: var(--papel);
+  font: inherit; font-size: var(--t-mini); font-weight: var(--peso-medio);
+  text-transform: capitalize; cursor: pointer;
+  transition: all var(--transicao);
+}
+.sit:hover { border-color: var(--tinta); }
+.sit--on { background: var(--indigo-fundo); color: #fff; border-color: var(--indigo-fundo); }
+
+.chip {
+  display: inline-block; padding: var(--e1) var(--e3);
+  border: var(--borda); border-radius: var(--raio-pilula);
+  background: var(--papel); text-decoration: none; font-size: var(--t-micro);
+  font-weight: var(--peso-medio); text-transform: capitalize;
+}
+.chip--on { background: var(--indigo-fundo); color: #fff; border-color: var(--indigo-fundo); }
+.filtros--painel { display: flex; gap: var(--e2); flex-wrap: wrap; margin-bottom: var(--e4); }
+
+/* ==========================================================================
+   MENSAGENS RECEBIDAS
+   ========================================================================== */
+.msgs { display: grid; gap: var(--e4); }
+.msg { background: var(--papel); border: var(--borda); border-radius: var(--raio-g);
+  padding: var(--e4); }
+.msg--nova { border-left: 3px solid var(--acao); }
+.msg header { display: flex; gap: var(--e3); align-items: baseline; flex-wrap: wrap;
+  margin-bottom: var(--e3); }
+.msg header span { color: var(--tinta-media); }
+.msg header time { margin-left: auto; color: var(--tinta-fraca); font-size: var(--t-micro);
+  font-family: var(--fonte-num); }
+.msg p { white-space: pre-wrap; }
+.msg footer { display: flex; gap: var(--e4); align-items: center; flex-wrap: wrap;
+  padding-top: var(--e3); border-top: var(--borda); font-size: var(--t-micro); }
+
+/* ==========================================================================
+   BARRAS DE ACESSO
+
+   Gráfico em CSS puro, sem biblioteca. São trinta barras: uma biblioteca de
+   gráfico custaria 60 KB e uma atualização de segurança por ano para desenhar
+   trinta retângulos.
+   ========================================================================== */
+.barras { display: flex; align-items: flex-end; gap: 2px; height: 9rem;
+  padding-top: var(--e4); }
+.barras__i { flex: 1; display: flex; flex-direction: column; justify-content: flex-end;
+  align-items: center; height: 100%; gap: var(--e1); }
+.barras__i span { width: 100%; background: var(--indigo-claro); border-radius: 2px 2px 0 0;
+  min-height: 2px; transition: background var(--transicao); }
+.barras__i:hover span { background: var(--acao); }
+.barras__i em { font-style: normal; font-size: 9px; color: var(--tinta-fraca);
+  font-family: var(--fonte-num); }
+
+/* ==========================================================================
+   TELA DE ENTRADA
+   ========================================================================== */
+body.entrada {
+  display: grid; place-items: center; min-height: 100vh; padding: var(--e5);
+  background: var(--indigo-fundo);
+  background-image: repeating-linear-gradient(63deg,
+    rgba(255,255,255,.045) 0 1px, transparent 1px 7px);
+}
+.entrada__cx {
+  width: min(100%, 23rem); background: var(--papel);
+  border-radius: var(--raio-g); padding: var(--e6);
+  box-shadow: var(--sombra-g);
+}
+.entrada__marca { display: flex; justify-content: center; margin-bottom: var(--e4); }
+.entrada__cx h1 { font-size: var(--t-g); text-align: center; margin-bottom: var(--e5); }
+.entrada__cx label { display: flex; flex-direction: column; gap: var(--e1);
+  margin-bottom: var(--e4); font-size: var(--t-micro); font-weight: var(--peso-forte);
+  text-transform: uppercase; letter-spacing: .06em; color: var(--tinta-media); }
+.entrada__cx .btn { margin-top: var(--e2); }
+.entrada__voltar { display: block; text-align: center; margin-top: var(--e4);
+  font-size: var(--t-micro); color: var(--tinta-media); text-decoration: none; }
+
+/* ==========================================================================
+   CELULAR — o menu vira barra de rolagem horizontal
+
+   Painel de loja É usado no celular, no balcão. Esconder o menu atrás de um
+   hambúrguer aqui custaria dois toques em cada troca de tela; a fita rolável
+   mantém tudo alcançável com o polegar.
+   ========================================================================== */
+@media (max-width: 900px) {
+  body.painel { grid-template-columns: 1fr; }
+  .lado { position: static; height: auto; }
+  .lado__nav { display: flex; gap: var(--e4); overflow-x: auto; padding: var(--e3); }
+  .lado__grupo { margin: 0; display: flex; align-items: center; gap: var(--e2); }
+  .lado__grupo h2 { padding: 0; white-space: nowrap; }
+  .lado__i { white-space: nowrap; }
+  .lado__ver { display: none; }
+  .pt { position: static; }
+  .tab th { position: static; }
+  .conteudo { padding: var(--e4) var(--e3); }
+  /* Tabela larga rola dentro de si mesma; a PÁGINA nunca rola de lado. */
+  .caixa, .tab { overflow-x: auto; display: block; }
+  .tab { white-space: nowrap; }
+}
+
+/* ==========================================================================
+   PRÉVIA DA FOTO NO PAINEL
+
+   Ver a foto ao lado do campo é o que evita salvar um caminho errado e só
+   descobrir abrindo o site. Se o caminho não existir, o navegador mostra o
+   ícone quebrado — e é exatamente essa a informação que se quer ali.
+   ========================================================================== */
+.previa {
+  margin-top: var(--e2);
+  width: 240px; height: auto; max-width: 100%;
+  border: var(--borda); border-radius: var(--raio);
+  object-fit: cover;
+  background: var(--papel-2);
+}

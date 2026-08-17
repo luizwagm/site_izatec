@@ -1,0 +1,20 @@
+{
+  "name": "izatec-tecidos",
+  "version": "1.3.0",
+  "private": true,
+  "description": "Izatec Tecidos — loja de tecidos com foco em jeans. Caruaru e Toritama/PE.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "semear": "node ferramentas/semear.cjs",
+    "backup": "node ferramentas/backup.cjs",
+    "usuario": "node ferramentas/usuario.cjs",
+    "test": "node testes/provar.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0"
+  }
+}
